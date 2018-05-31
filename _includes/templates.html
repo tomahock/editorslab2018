@@ -12,7 +12,7 @@
             </div>
             <ul class="col-12 col-md-6 list-unstyled clearfix comments">
                 {{#comments}}
-                    <li {{#owner.same}}class="owner"{{/owner.same}}>
+                    <li class="comment {{#owner.same}}owner{{/owner.same}}">
                         <img class="avatar" src="{{owner.avatar}}" /> <a class="link" href="https://instagram.com/{{owner.username}}">{{owner.displayName}}</a>
                         <p class="text">{{comment.text}}</p>
                     </li>

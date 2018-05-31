@@ -64,7 +64,7 @@ main {
         }
         .comments {
             padding-top: 53px;
-            li {
+            .comment {
                 background: #eee;
                 padding: .5rem;
                 width: 80%;
@@ -75,7 +75,7 @@ main {
                 &.owner {
                     float: left;
                     background: #33A1FD;
-                    .link{
+                    .link {
                         color: #fff;
                         font-weight: bold;
                         &:hover {
