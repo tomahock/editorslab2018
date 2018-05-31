@@ -41,6 +41,15 @@
     }
 
     /* METHODS */
+    function getStats() {
+        $('[data-username]').each(function(idx, elm) {
+            $.get(api + '/players/' + $(elm).attr('data-username') + '/stats', function(res) {
+                console.log(res);
+                //$('#player').html(Mustache.render(templates['template-player'], res));
+            });
+        })
+    }
+
     function getLast() {
         $.get(api + '/last', function(res) {
             console.log(res);
@@ -48,6 +57,7 @@
                 post: templates['post'],
                 comment: templates['comment']
             }));
+            getStats();
         });
     }
 
