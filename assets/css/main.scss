@@ -73,20 +73,20 @@ main {
                 &.owner {
                     float: left;
                     background: #33A1FD;
+                    .link{
+                        color: #fff;
+                        font-weight: bold;
+                        &:hover {
+                            text-decoration: none;
+                        }
+                    }
                 }
-                .comment-avatar {
+                .avatar {
                     width: 30px;
                     border-radius: 20px;
                 }
-                .comment-text {
+                .text {
                     margin: 0 0 0 34px;
-                }
-                .comment-owner{
-                    color: #fff;
-                    font-weight: bold;
-                    &:hover {
-                        text-decoration: none;
-                    }
                 }
             }
         }
