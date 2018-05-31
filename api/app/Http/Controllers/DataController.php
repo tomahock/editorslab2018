@@ -138,7 +138,8 @@ class DataController extends Controller
 
         $queryTotals = "match (p:Player {username:{playerId}})-[:Publish]->(post:Post)
                         OPTIONAL match (p)-[:Create]->(c:Comment)
-                        return p,count(post) as totalPosts,count(c) as totalComments";
+                        OPTIONAL match (post)<-[:Commented]->(cc:Comment)
+                        return p,count(post) as totalPosts,count(c) as totalComments, count(cc) as totalCommentsReceived";
 
         $result = $client->run($queryTotals, ['playerId' => $playerId]);
 
@@ -147,6 +148,7 @@ class DataController extends Controller
         foreach ($records as $r) {
             $response[$playerId]['totalPosts'] = $r->get('totalPosts');
             $response[$playerId]['totalComments'] = $r->get('totalComments');
+            $response[$playerId]['totalCommentsReceived'] = $r->get('totalCommentsReceived');
             $p = $r->get('p')->values();
             $response[$playerId] = array_merge($response[$playerId], $p);
         }
@@ -158,6 +160,7 @@ class DataController extends Controller
         foreach ($records as $r) {
             $response[$player2Id]['totalPosts'] = $r->get('totalPosts');
             $response[$player2Id]['totalComments'] = $r->get('totalComments');
+            $response[$player2Id]['totalCommentsReceived'] = $r->get('totalCommentsReceived');
             $p = $r->get('p')->values();
             $response[$player2Id] = array_merge($response[$player2Id], $p);
         }
