@@ -32,6 +32,9 @@
                             <p class="text">{{comment.text}}</p>
                         </li>
                     {{/comments}}
+                    {{^comments}}
+                        <li class="empty">Nothing to see here</li>
+                    {{/comments}}
                 </ul>
             </div>
         </div>
@@ -69,12 +72,12 @@
 
 <script type="x-tmpl-mustache" data-template="player-posts">
     <h1>{{player.displayName}}'s Posts</h1>
-    {{#.}}
+    {{#posts}}
         {{> post}}
-    {{/.}}
-    {{^.}}
+    {{/posts}}
+    {{^posts}}
         <p>Nothing to see here</p>
-    {{/.}}
+    {{/posts}}
 </script>
 
 <script type="x-tmpl-mustache" data-template="players">
