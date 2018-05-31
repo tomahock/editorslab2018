@@ -16,7 +16,7 @@
 </script>
 
 <script type="x-tmpl-mustache" data-template="post">
-    <article class="card">
+    <article class="card" data-username="{{username}}">
         <div class="card-body d-flex flex-column flex-md-row">
             <div class="col-12 col-md-6 post">
                 {{#post}}
@@ -35,7 +35,7 @@
             </ul>
         </div>
         {{#owner}}
-        <div class="card-footer" data-username="{{username}}">
+        <div class="card-footer">
             {{#avatar}}
             <div class="col-12 col-md-4 avatar">
                 <div class="d-flex align-items-start">
@@ -64,18 +64,18 @@
 </script>
 
 <script type="x-tmpl-mustache" data-template="player-posts">
-    <h1>{{player.displayName}}</h1>
-    {{#posts}}
+    <h1>{{player.displayName}}'s Posts</h1>
+    {{#.}}
         {{> post}}
-    {{/posts}}
-    {{^posts}}
+    {{/.}}
+    {{^.}}
         <p>Nothing to see here</p>
-    {{/posts}}
+    {{/.}}
 </script>
 
 <script type="x-tmpl-mustache" data-template="players">
     {{#.}}
-        <li><a href="#/posts/{{username}}">{{displayName}}</a></li>
+        <li><a href="#/players/{{username}}">{{displayName}}</a></li>
     {{/.}}
     {{^.}}
         <li class="empty">Nothing to see here</li>

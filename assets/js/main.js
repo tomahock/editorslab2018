@@ -21,7 +21,13 @@
 
     function getLatest() {
         $.get(api + '/last', function(res) {
-            console.log(res);
+            res = res.map(function(elm) {
+                elm.username = function() {
+                    getStats(elm.owner.username);
+                    return elm.owner.username;
+                };
+                return elm;
+            });
             $('#posts').html(Mustache.render(templates['latest-posts'], res, {post: templates['post']}));
         });
     }
@@ -33,8 +39,9 @@
         });
     }
 
-    function getPlayer(player) {
-        $.get(api + '/players/' + player, function(res) {
+    function getPlayer(ev) {
+        ev.preventDefault();
+        $.get(api + ev.target.hash.slice(1), function(res) {
             console.log(res);
             //$('#player').html(Mustache.render(templates['template-player'], res));
         });
@@ -47,6 +54,7 @@
 
     /* EVENT LISTENERS */
     $(d).on('ajaxStart ajaxStop', toggleLoading);
+    $(d).on('click', '#players a', getPlayer);
 
     /* INIT */
     $('script[type="x-tmpl-mustache"]').each(function(idx, elm) {
