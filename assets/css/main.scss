@@ -8,12 +8,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-header {
-    .navbar {
-
-    }
-}
-
 a {
     color: #33A1FD;
     img, svg {
@@ -71,14 +65,16 @@ main {
 .comments {
     li {
         background: #eee;
-        padding: 1rem;
+        padding: .5rem;
         width: 80%;
         float: right;
-        border-radius: .5rem;
+        border-radius: .4rem;
         margin-bottom: 1rem;
+        font-size: .875rem;
         &.owner {
             float: left;
             background: #33A1FD;
+            color: #fff;
         }
 
         .comment-avatar{
@@ -91,7 +87,8 @@ main {
         }
 
         .comment-owner{
-            color: #262626;
+            color: #fff;
+            font-weight: bold;
             &:hover {
                 text-decoration: none;
             }
