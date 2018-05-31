@@ -96,9 +96,11 @@ main {
     .card-footer {
         .avatar {
             img {
-                width: 80px;
-                margin-right: 1rem;
+                width: 60px;
             }
+        }
+        .info {
+            padding-left: .5rem;
         }
     }
 }
