@@ -1,0 +1,86 @@
+---
+---
+/* yes, the lines above are needed! */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+header {
+    .navbar {
+
+    }
+}
+
+a {
+    color: #33A1FD;
+    img, svg {
+        opacity: 1;
+    }
+    &:hover {
+        img, svg {
+            opacity: .75;
+        }
+    }
+}
+
+img, svg {
+    max-width: 100%;
+}
+
+.loading {
+    body {
+        &:before, &:after {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 3rem;
+            height: 3rem;
+            margin: -1.5rem 0 0 -1.5rem;
+            border-radius: 50%;
+            background: rgba(#000, .2);
+            animation: loading 2.0s infinite ease-in-out;
+        }
+        &:after {
+            animation-delay: -1.0s;
+        }
+    }
+    main {
+        opacity: .05;
+    }
+}
+
+main {}
+
+.not-found main {
+    padding: 0;
+    .row {
+        height: 100vh;
+    }
+}
+
+@keyframes loading {
+    0%, 100% { 
+        transform: scale(0.0);
+    } 50% { 
+        transform: scale(1.0);
+    }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { }

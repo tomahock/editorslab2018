@@ -1,7 +1,0 @@
-{
-    "require": {
-        "guzzlehttp/guzzle": "^6.3",
-        "pgrimaud/instagram-user-feed": "^5.0",
-        "graphaware/neo4j-php-client": "^4.8"
-    }
-}
