@@ -2,7 +2,7 @@
 {% raw %}
 <script type="x-tmpl-mustache" data-template="comment">
     {{#comment}}
-    <li {{#same}}class="owner"{{/same}}>
+    <li {{#owner.same}}class="owner"{{/owner.same}}>
         <img class="comment-avatar" src="{{owner.avatar}}" /> <a href="https://instagram.com/{{owner.username}}" class="comment-owner">{{owner.displayName}}</a>
         <p class="comment-text">{{text}}</p>
     </li>
