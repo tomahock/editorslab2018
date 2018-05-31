@@ -23,7 +23,25 @@
                 {{/comments}}
             </ul>
         </div>
-        <div class="card-footer text-right">sharing icons n stuff</div>
+        <div class="card-footer d-flex flex-column flex-md-row">
+            {{#owner}}
+                {{#avatar}}
+                <div class="col avatar d-flex align-items-start">
+                    <img class="rounded-circle" src="{{avatar}}">
+                    <div class="info">
+                        <div class="name">{{displayName}}</div>
+                        <div class="country">{{country}}</div>
+                    </div>
+                </div>
+                {{/avatar}}
+                <div class="col stats">
+                    <p><strong>Comments</strong></p>
+                </div>
+                <div class="col activity">
+                    <p><strong>Activity</strong></p>
+                </div>
+            {{/owner}}
+        </div>
     </div>
 </script>
 
