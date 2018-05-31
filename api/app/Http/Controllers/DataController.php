@@ -87,6 +87,40 @@ class DataController extends Controller
         return \Response::json($response);
     }
 
+    public function getPlayersCompare($playerId, $player2Id)
+    {
+        $client = $this->getClient();
+
+        $query = "match (p:Player {username:{playerId}})-[:Publish]->(post:Post)
+                    with p,post
+                    match (post)<-[:Commented]-(c:Comment)
+                    match (c)-[]-(person:Player {player2Id})
+                    where not p.username=person.username
+                    return count(c) as totalComments, count(post) as totalPost";
+
+        $result = $client->run($query, ['playerId' => $playerId, 'player2Id' => $player2Id]);
+
+        $records = $result->getRecords();
+
+        $response = array();
+
+        foreach ($records as $r) {
+            $response[$player2Id]['comments'] = $r->get('totalComments');
+            $response[$playerId]['posts'] = $r->get('totalPosts');
+        }
+
+        $result = $client->run($query, ['playerId' => $player2Id, 'player2Id' => $playerId]);
+
+        $records = $result->getRecords();
+
+        foreach ($records as $r) {
+            $response[$playerId]['comments'] = $r->get('totalComments');
+            $response[$player2Id]['posts'] = $r->get('totalPosts');
+        }
+
+        return \Response::json($response);
+    }
+
     public function getPlayerPosts($playerId)
     {
         $client = $this->getClient();
