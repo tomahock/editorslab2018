@@ -44,7 +44,7 @@
     function getLast() {
         $.get(api + '/last', function(res) {
             console.log(res);
-            //$('#last').html(Mustache.render(templates['template-last'], res));
+            $('#last').html(Mustache.render(templates['last'], res, {post: templates['post']}));
         });
     }
 
@@ -72,8 +72,10 @@
 
     /* INIT */
     $('script[type="x-tmpl-mustache"]').each(function(idx, elm) {
-        templates[elm.id] = $(elm).html();
-        Mustache.parse(templates[elm.id]);
+        elm = $(elm);
+        var template = elm.attr('data-template');
+        templates[template] = elm.html();
+        Mustache.parse(templates[template]);
     });
     !$(de).is('.not-found') && getStuff();
 

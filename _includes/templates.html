@@ -1,0 +1,31 @@
+
+{% raw %}
+<script type="x-tmpl-mustache" data-template="comments">
+    <ul>
+        <li>ping</li>
+        <li>pong</li>
+    </ul>
+</script>
+
+<script type="x-tmpl-mustache" data-template="post">
+    <div class="card text-center">
+        <div class="card-header text-left">about the guy</div>
+        <div class="card-body row">
+            <div class="col-12 col-md-6 post">
+                the shitpost
+            </div>
+            <div class="col-12 col-md-6 comments">
+                the shitstorm
+            </div>
+        </div>
+        <div class="card-footer text-right">sharing icons n stuff</div>
+    </div>
+</script>
+
+
+<script type="x-tmpl-mustache" data-template="last">
+    {{#.}}
+        {{> post}}
+    {{/.}}
+</script>
+{% endraw %}

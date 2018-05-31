@@ -53,7 +53,12 @@ img, svg {
     }
 }
 
-main {}
+main {
+    margin-top: 5rem;
+    .card {
+        margin-bottom: 2rem;
+    }
+}
 
 .not-found main {
     padding: 0;
