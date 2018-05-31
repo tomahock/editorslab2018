@@ -68,7 +68,11 @@ img, svg {
         margin-bottom: 2rem;
         border: 1px solid #E1E3DF;
         .card-body {
-            padding: 0 15px;
+            padding: 0;
+            > * {
+                padding: 15px;
+                margin: 0;
+            }
             .post {
                 border-right: none;
             }
@@ -93,6 +97,15 @@ img, svg {
                                 text-decoration: none;
                             }
                         }
+                        &:after {
+                            left: 0;
+                            border: 20px solid transparent;
+                            border-right-color: #33A1FD;
+                            border-left: 0;
+                            border-top: 0;
+                            margin-top: -10px;
+                            margin-left: -12px;
+                        }
                     }
                     .avatar {
                         width: 30px;
@@ -111,22 +124,21 @@ img, svg {
                     &:after {
                         content: '';
                         position: absolute;
-                        top:0;
                         right: 0;
+                        top: 10px;
                         width: 0;
                         height: 0;
                         border: 20px solid transparent;
                         border-left-color: #eee;
                         border-right: 0;
-                        border-bottom: 0;
+                        border-top: 0;
                         margin-top: -10px;
-                        margin-right: -20px;
+                        margin-right: -12px;
                     }
                 }
             }
         }
         .card-footer {
-            padding: 15px;
             .avatar {
                 img {
                     width: 60px;
