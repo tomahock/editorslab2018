@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93391b86948f92598da4d2cfa24e695c",
+    "content-hash": "e03bd110ed5209b7dda75505bfd27767",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -1127,6 +1127,37 @@
                 "storage"
             ],
             "time": "2018-05-07T08:44:23+00:00"
+        },
+        {
+            "name": "lotsofcode/tag-cloud",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lotsofcode/tag-cloud.git",
+                "reference": "c75a5b81969a55ecce718dc58c2621a3199e13b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lotsofcode/tag-cloud/zipball/c75a5b81969a55ecce718dc58c2621a3199e13b3",
+                "reference": "c75a5b81969a55ecce718dc58c2621a3199e13b3",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "lotsofcode": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "PHP tag cloud class http://lotsofcode.github.com/tag-cloud",
+            "homepage": "http://lotsofcode.github.com/tag-cloud",
+            "keywords": [
+                "tag cloud"
+            ],
+            "time": "2016-11-25T12:35:43+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4984,7 +5015,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "lotsofcode/tag-cloud": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

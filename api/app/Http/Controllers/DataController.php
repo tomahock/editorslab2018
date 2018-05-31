@@ -4,17 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GraphAware\Neo4j\Client\ClientBuilder;
+use lotsofcode\TagCloud\TagCloud;
 
 class DataController extends Controller
 {
     private function getClient()
     {
         return ClientBuilder::create()
-        ->addConnection('default',
-            'http://neo4j:x@localhost:7474')// Example for HTTP connection configuration (port is optional)
-        ->addConnection('bolt',
-            'bolt://neo4j:x@localhost:7687')// Example for BOLT connection configuration (port is optional)
-        ->build();
+            ->addConnection('default',
+                'http://neo4j:x@localhost:7474')// Example for HTTP connection configuration (port is optional)
+            ->addConnection('bolt',
+                'bolt://neo4j:x@localhost:7687')// Example for BOLT connection configuration (port is optional)
+            ->build();
     }
 
     public function getLast()
@@ -24,9 +25,10 @@ class DataController extends Controller
         $query = "match (post:Post)<-[:Commented]-(c:Comment), 
                     (post)<-[:Publish]-(owner:Player), 
                     (c)<-[:Create]-(commentator:Player) 
+                    where not owner.username=commentator.username
                     return post,collect({c:c,owner:owner,commentator:commentator}) as meta 
                     order by post.date desc
-                    limit 50";
+                    limit 10";
 
         $result = $client->run($query);
 
@@ -34,7 +36,7 @@ class DataController extends Controller
 
         $response = array();
 
-        foreach($records as $r){
+        foreach ($records as $r) {
             $_r = array();
 
             $_r['post'] = $r->get('post')->values();
@@ -45,10 +47,16 @@ class DataController extends Controller
 
             $comments = array();
 
-            foreach($meta as $m){
+            foreach ($meta as $m) {
                 $_c = array();
                 $_c['comment'] = $m['c']->values();
                 $_c['owner'] = $m['commentator']->values();
+
+                if($_c['owner']['username'] === $_r['owner']['username']){
+                    $_c['owner']['same'] = true;
+                } else {
+                    $_c['owner']['same'] = false;
+                }
 
                 $comments[] = $_c;
             }
@@ -72,7 +80,7 @@ class DataController extends Controller
         $records = $result->getRecords();
 
         $response = array();
-        foreach($records as $r){
+        foreach ($records as $r) {
             $response[] = $r->get('p')->values();
         }
 
@@ -90,12 +98,12 @@ class DataController extends Controller
                     return p,post, collect({c:c,commentator:commentator}) as meta
                     order by post.date desc";
 
-        $result = $client->run($query,['playerId' => $playerId]);
+        $result = $client->run($query, ['playerId' => $playerId]);
 
         $records = $result->getRecords();
 
         $response = array();
-        foreach($records as $r){
+        foreach ($records as $r) {
             $_r = array();
 
             $_r['post'] = $r->get('post')->values();
@@ -104,9 +112,9 @@ class DataController extends Controller
 
             $comments = array();
 
-            foreach($meta as $m){
+            foreach ($meta as $m) {
                 $_c = array();
-                if($m['c']){
+                if ($m['c']) {
                     $_c['comment'] = $m['c']->values();
                     $_c['owner'] = $m['commentator']->values();
                     $comments[] = $_c;
@@ -118,5 +126,207 @@ class DataController extends Controller
         }
 
         return \Response::json($response);
+    }
+
+    public function getPlayerPostCloud($playerId)
+    {
+        $client = $this->getClient();
+
+        $query = "match (p:Player {username:{playerId}})-[:Publish]->(post:Post)
+                    return post.message as text";
+
+        $result = $client->run($query, ['playerId' => $playerId]);
+
+        $records = $result->getRecords();
+
+        $cloud = new TagCloud();
+        $response = array();
+        foreach ($records as $r) {
+            $cloud->addString($r->get('text'));
+        }
+
+        $response['cloud'] = $cloud->render();
+
+        return \Response::json($response);
+    }
+
+    public function getPlayerCommentsCloud($playerId)
+    {
+        $client = $this->getClient();
+
+        $query = "match (p:Player {username:{playerId}})-[:Create]->(c:Comment)
+                    return c.text as text";
+
+        $result = $client->run($query, ['playerId' => $playerId]);
+
+        $records = $result->getRecords();
+
+        $cloud = new TagCloud();
+        $response = array();
+        foreach ($records as $r) {
+            $cloud->addString($r->get( 'text'));
+        }
+
+        $response['cloud'] = $cloud->render();
+
+        return \Response::json($response);
+    }
+
+
+    public function getPlayerStats($playerId)
+    {
+        $client = $this->getClient();
+
+        $query = "match (p:Player {username:{playerId}})-[:Publish]->(post:Post)
+                    with p,post
+                    match (post)<-[:Commented]-(c:Comment)
+                    match (c)-[]-(person:Player)
+                    where not p.username=person.username
+                    return count(person.country) as total, person.country as country, count(person) as totalx";
+
+        $result = $client->run($query, ['playerId' => $playerId]);
+
+        $records = $result->getRecords();
+
+        $response = array(
+            'comments' => array()
+        );
+        foreach ($records as $r) {
+            $_r = array();
+            $_r['incoming']['country'] = $r->get('country');
+            $_r['incoming']['total'] = $r->get('total');
+
+            $response['comments'][] = $_r;
+            $response['receive'] = $r->get('totalx');
+        }
+
+        $query = "match (p:Player {username:{playerId}})-[:Create]-(c:Comment)
+                    match (c)-[]-(post:Post)
+                    match (post)-[]-(pp:Player)
+                    return count(pp.country) as total, pp.country as country, count(pp) as totalx";
+
+        $result = $client->run($query, ['playerId' => $playerId]);
+
+        $records = $result->getRecords();
+
+        foreach ($records as $r) {
+            $_r = array();
+            $_r['outgoing']['country'] = $r->get('country');
+            $_r['outgoing']['total'] = $r->get('total');
+
+            $response['comments'][] = $_r;
+            $response['sent'] = $r->get('totalx');
+        }
+
+        if(!isset($response['sent'])){
+            $response['sent'] = 0;
+        }
+
+        if(!isset($response['receive'])){
+            $response['receive'] = 0;
+        }
+
+
+        $postHours = $this->getPostHours($playerId);
+        $commentsHours = $this->getCommentsHours($playerId);
+
+        $response['postHours'] = $postHours;
+        $response['commentsHours'] = $commentsHours;
+        return \Response::json($response);
+    }
+
+    private function getPostHours($playerId)
+    {
+        $client = $this->getClient();
+
+        $query = "match (p:Player {username:{playerId}})-[:Publish]->(post:Post)
+                   return post.date as d";
+
+        $result = $client->run($query, ['playerId' => $playerId]);
+
+        $records = $result->getRecords();
+
+        $hours = array(
+            "0" => 0,
+            "1" => 0,
+            "2" => 0,
+            "3" => 0,
+            "4" => 0,
+            "5" => 0,
+            "6" => 0,
+            "7" => 0,
+            "8" => 0,
+            "9" => 0,
+            "10" => 0,
+            "11" => 0,
+            "12" => 0,
+            "13" => 0,
+            "14" => 0,
+            "15" => 0,
+            "16" => 0,
+            "17" => 0,
+            "18" => 0,
+            "19" => 0,
+            "20" => 0,
+            "21" => 0,
+            "22" => 0,
+            "23" => 0,
+        );
+
+        foreach ($records as $r) {
+            $hour = (int)date("h", $r->get('d'));
+            $_h = (string) $hour;
+            $hours[$_h] = $hours[$_h] +1;
+        }
+
+        return $hours;
+    }
+
+    private function getCommentsHours($playerId)
+    {
+
+        $client = $this->getClient();
+
+        $query = "match (p:Player {username:{playerId}})-[:Create]->(comment:Comment)
+                   return comment.date as d";
+
+        $result = $client->run($query, ['playerId' => $playerId]);
+
+        $records = $result->getRecords();
+
+        $hours = array(
+            "0" => 0,
+            "1" => 0,
+            "2" => 0,
+            "3" => 0,
+            "4" => 0,
+            "5" => 0,
+            "6" => 0,
+            "7" => 0,
+            "8" => 0,
+            "9" => 0,
+            "10" => 0,
+            "11" => 0,
+            "12" => 0,
+            "13" => 0,
+            "14" => 0,
+            "15" => 0,
+            "16" => 0,
+            "17" => 0,
+            "18" => 0,
+            "19" => 0,
+            "20" => 0,
+            "21" => 0,
+            "22" => 0,
+            "23" => 0,
+        );
+
+        foreach ($records as $r) {
+            $hour = (int)date("h", $r->get('d'));
+            $_h = (string) $hour;
+            $hours[$_h] = $hours[$_h] +1;
+        }
+
+        return $hours;
     }
 }

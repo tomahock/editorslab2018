@@ -9,7 +9,8 @@
         "fideloper/proxy": "^4.0",
         "graphaware/neo4j-php-client": "^4.8",
         "laravel/framework": "5.6.*",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "lotsofcode/tag-cloud": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "^2.0",
