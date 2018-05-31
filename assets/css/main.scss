@@ -80,17 +80,14 @@ main {
                     float: left;
                     background: #33A1FD;
                 }
-        
-                .comment-avatar{
+                .comment-avatar {
                     width: 30px;
                     border-radius: 20px;
                 }
-        
-                .comment-text{
+                .comment-text {
                     margin: 0 0 0 34px;
                 }
-        
-                .comment-owner{
+                .comment-owne r{
                     color: #262626;
                     &:hover {
                         text-decoration: none;
@@ -102,7 +99,8 @@ main {
     .card-footer {
         .avatar {
             img {
-            width: 80px;
+                width: 80px;
+            }
         }
     }
 }
