@@ -36,16 +36,24 @@
 
     function getPlayers() {
         $.get(api + '/players', function(res) {
-            console.log(res);
             $('#players ul').html(Mustache.render(templates['players'], res));
         });
     }
 
     function getPlayer(ev) {
         ev.preventDefault();
-        $.get(api + ev.target.hash.slice(1), function(res) {
-            console.log(res);
-            //$('#player').html(Mustache.render(templates['template-player'], res));
+        var pathname = ev.target.hash.slice(1);
+        $.get(api + pathname, function(player) {
+            $.get(api + pathname + '/posts', function(posts) {
+                console.log(posts);
+                $('#posts').html(
+                    Mustache.render(
+                        templates['player-posts'],
+                        {player: player, posts: posts},
+                        {post: templates['post']}
+                    )
+                );
+            });
         });
     }
 
@@ -62,7 +70,6 @@
     $('script[type="x-tmpl-mustache"]').each(function(idx, elm) {
         elm = $(elm);
         var template = elm.attr('data-template');
-        console.log(template);
         templates[template] = elm.html();
         Mustache.parse(templates[template]);
         elm.remove();
