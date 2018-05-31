@@ -15,7 +15,9 @@
     /* METHODS */
     function getStats(username) {
         $.get(api + '/players/' + username + '/stats', function(res) {
-            $('[data-username="' + username + '"] .stats').html(Mustache.render(templates['stats'], res));
+            var ctx = $('#posts [data-username="' + username + '"]');
+            $('.stats', ctx).html(Mustache.render(templates['stats'], res));
+            $('.activity', ctx).html(Mustache.render(templates['activity'], res));
         });
     }
 

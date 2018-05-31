@@ -68,11 +68,7 @@ img, svg {
         margin-bottom: 2rem;
         border: 1px solid #E1E3DF;
         .card-body {
-            padding: 0;
-            > * {
-                padding: 15px;
-                margin: 0;
-            }
+            padding: 0 15px;
             .post {
                 border-right: none;
             }
@@ -130,6 +126,7 @@ img, svg {
             }
         }
         .card-footer {
+            padding: 15px;
             .avatar {
                 img {
                     width: 60px;

@@ -1,53 +1,57 @@
 
 {% raw %}
 <script type="x-tmpl-mustache" data-template="stats">
-    <div class="col-12 col-md-6 stats">
-        <div><strong>Comments</strong></div>
-        <div>
-            <span><strong>{{receive}}</strong> Received</span>
-            <span><strong>{{sent}}</strong> Sent</span>
-        </div>
-        <div>Most received from </div>
-        <div>Most sent to </div>
+    <div><strong>Comments</strong></div>
+    <div>
+        <span><strong>{{receive}}</strong> Received</span>
+        <span><strong>{{sent}}</strong> Sent</span>
     </div>
-    <div class="col-12 col-md-6 activity">
-        <div><strong>Activity</strong></div>
-    </div>
+    <div>Most received from </div>
+    <div>Most sent to </div>
+</script>
+
+<script type="x-tmpl-mustache" data-template="activity">
+    <div><strong>Activity</strong></div>
 </script>
 
 <script type="x-tmpl-mustache" data-template="post">
     <article class="card" data-username="{{username}}">
-        <div class="card-body d-flex flex-column flex-md-row">
-            <div class="col-12 col-md-6 post">
-                {{#post}}
-                    <blockquote class="embedly-card">
-                        <h4><a href="{{link}}">{{message}}</a></h4>
-                    </blockquote>
-                {{/post}}
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-6 post">
+                    {{#post}}
+                        <blockquote class="embedly-card">
+                            <h4><a href="{{link}}">{{message}}</a></h4>
+                        </blockquote>
+                    {{/post}}
+                </div>
+                <ul class="col-12 col-md-6 list-unstyled clearfix comments">
+                    {{#comments}}
+                        <li class="comment {{#owner.same}}owner{{/owner.same}}">
+                            <img class="avatar" src="{{owner.avatar}}" /> <a class="link" href="https://instagram.com/{{owner.username}}">{{owner.displayName}}</a>
+                            <p class="text">{{comment.text}}</p>
+                        </li>
+                    {{/comments}}
+                </ul>
             </div>
-            <ul class="col-12 col-md-6 list-unstyled clearfix comments">
-                {{#comments}}
-                    <li class="comment {{#owner.same}}owner{{/owner.same}}">
-                        <img class="avatar" src="{{owner.avatar}}" /> <a class="link" href="https://instagram.com/{{owner.username}}">{{owner.displayName}}</a>
-                        <p class="text">{{comment.text}}</p>
-                    </li>
-                {{/comments}}
-            </ul>
         </div>
         {{#owner}}
         <div class="card-footer">
-            {{#avatar}}
-            <div class="col-12 col-md-4 avatar">
-                <div class="d-flex align-items-start">
-                    <img class="rounded-circle" src="{{avatar}}">
-                    <div class="info">
-                        <div class="name">{{displayName}}</div>
-                        <div class="country">{{country}}</div>
+            <div class="row">
+                {{#avatar}}
+                <div class="col-12 col-md-4 avatar">
+                    <div class="d-flex align-items-start">
+                        <img class="rounded-circle" src="{{avatar}}">
+                        <div class="info">
+                            <div class="name">{{displayName}}</div>
+                            <div class="country">{{country}}</div>
+                        </div>
                     </div>
                 </div>
+                {{/avatar}}
+                <div class="col-12 col-md-4 stats"></div>
+                <div class="col-12 col-md-4 activity"></div>
             </div>
-            {{/avatar}}
-            <div class="col-12 col-md-8 row stats"></div>
         </div>
         {{/owner}}
     </article>
