@@ -5,7 +5,7 @@
     db = d.body;
 
     var breakpoints = {sm: 576, md: 768, lg: 992, xl: 1200},
-        api = 'https://ea9f1ee3.ngrok.io',
+        api = 'https://editorslab.tomahock.com',
         templates = {};
 
     function toggleLoading(evt) {
