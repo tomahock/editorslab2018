@@ -59,6 +59,7 @@ main {
             padding: 15px;
             margin: 0;
         }
+<<<<<<< HEAD
     }
 }
 
@@ -80,21 +81,55 @@ main {
         .comment-avatar{
             width: 30px;
             border-radius: 20px;
+=======
+        .post {
+            border-right: 1px solid #ccc;
+>>>>>>> 37c996b4c9cf1fb7eef336e1234a7db3b52e6efb
         }
-
-        .comment-text{
-            margin: 0 0 0 34px;
+        .comments {
+            li {
+                background: #eee;
+                padding: 1rem;
+                width: 80%;
+                float: right;
+                border-radius: .5rem;
+                margin-bottom: 1rem;
+                &.owner {
+                    float: left;
+                    background: #33A1FD;
+                }
+                .comment-avatar {
+                    width: 30px;
+                    border-radius: 20px;
+                }
+                .comment-text {
+                    margin: 0 0 0 34px;
+                }
+                .comment-owne r{
+                    color: #262626;
+                    &:hover {
+                        text-decoration: none;
+                    }
+                }
+            }
         }
+<<<<<<< HEAD
 
         .comment-owner{
             color: #fff;
             font-weight: bold;
             &:hover {
                 text-decoration: none;
+=======
+    }
+    .card-footer {
+        .avatar {
+            img {
+                width: 80px;
+>>>>>>> 37c996b4c9cf1fb7eef336e1234a7db3b52e6efb
             }
         }
     }
-
 }
 
 .not-found main {
