@@ -52,7 +52,7 @@ class DataController extends Controller
                 $_c['comment'] = $m['c']->values();
                 $_c['owner'] = $m['commentator']->values();
 
-                if($_c['owner']['username'] === $_r['owner']['username']){
+                if ($_c['owner']['username'] === $_r['owner']['username']) {
                     $_c['owner']['same'] = true;
                 } else {
                     $_c['owner']['same'] = false;
@@ -93,7 +93,7 @@ class DataController extends Controller
 
         $query = "MATCH (p:Player {username:{playerId}}) return p";
 
-        $result = $client->run($query,["playerId" => $playerId]);
+        $result = $client->run($query, ["playerId" => $playerId]);
 
         $records = $result->getRecords();
 
@@ -245,7 +245,7 @@ class DataController extends Controller
         $cloud = new TagCloud();
         $response = array();
         foreach ($records as $r) {
-            $cloud->addString($r->get( 'text'));
+            $cloud->addString($r->get('text'));
         }
 
         $response['cloud'] = $cloud->render();
@@ -299,12 +299,34 @@ class DataController extends Controller
             $response['sent'] = $r->get('totalx');
         }
 
-        if(!isset($response['sent'])){
+        if (!isset($response['sent'])) {
             $response['sent'] = 0;
         }
 
-        if(!isset($response['receive'])){
+        if (!isset($response['receive'])) {
             $response['receive'] = 0;
+        }
+
+        $query = "match (p:Player {username:{playerId}})-[:Publish]->(post:Post)
+                    with p,post
+                    match (post)<-[:Commented]-(c:Comment)
+                    match (c)-[]-(person:Player)
+                    where not p.username=person.username
+                    with person, count(c) as c order by c
+                    return person as player,c";
+
+        $result = $client->run($query, ['playerId' => $playerId]);
+
+        if($result->size()){
+            $r = $result->getRecord();
+
+            $response['mostCommentsReceive'] = array(
+                'total' => $r->get('c'),
+                'player' => $r->get('player')->values(),
+            );
+        } else {
+            $response['mostCommentsReceive'] = array(
+            );
         }
 
 
@@ -356,8 +378,8 @@ class DataController extends Controller
 
         foreach ($records as $r) {
             $hour = (int)date("h", $r->get('d'));
-            $_h = (string) $hour;
-            $hours[$_h] = $hours[$_h] +1;
+            $_h = (string)$hour;
+            $hours[$_h] = $hours[$_h] + 1;
         }
 
         return $hours;
@@ -404,8 +426,8 @@ class DataController extends Controller
 
         foreach ($records as $r) {
             $hour = (int)date("h", $r->get('d'));
-            $_h = (string) $hour;
-            $hours[$_h] = $hours[$_h] +1;
+            $_h = (string)$hour;
+            $hours[$_h] = $hours[$_h] + 1;
         }
 
         return $hours;
