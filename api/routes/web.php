@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/players', 'DataController@getPlayers');
+Route::get('/players/{playerId}', 'DataController@getPlayer');
 Route::get('/players/{playerId}/posts', 'DataController@getPlayerPosts');
 Route::get('/players/{playerId}/stats', 'DataController@getPlayerStats');
 Route::get('/players/{playerId}/posts-cloud', 'DataController@getPlayerPostCloud');

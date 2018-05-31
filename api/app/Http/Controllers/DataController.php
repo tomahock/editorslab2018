@@ -87,6 +87,24 @@ class DataController extends Controller
         return \Response::json($response);
     }
 
+    public function getPlayer($playerId)
+    {
+        $client = $this->getClient();
+
+        $query = "MATCH (p:Player {username:{playerId}}) return p";
+
+        $result = $client->run($query,["playerId" => $playerId]);
+
+        $records = $result->getRecords();
+
+        $response = array();
+        foreach ($records as $r) {
+            $response = $r->get('p')->values();
+        }
+
+        return \Response::json($response);
+    }
+
     public function getPlayersCompare($playerId, $player2Id)
     {
         $client = $this->getClient();
@@ -94,9 +112,9 @@ class DataController extends Controller
         $query = "match (p:Player {username:{playerId}})-[:Publish]->(post:Post)
                     with p,post
                     match (post)<-[:Commented]-(c:Comment)
-                    match (c)-[]-(person:Player {player2Id})
+                    match (c)-[]-(person:Player {username:{player2Id}})
                     where not p.username=person.username
-                    return count(c) as totalComments, count(post) as totalPost";
+                    return count(c) as totalComments, count(post) as totalPosts";
 
         $result = $client->run($query, ['playerId' => $playerId, 'player2Id' => $player2Id]);
 
