@@ -47,63 +47,81 @@ img, svg {
     }
 }
 
-main {
-    margin-top: 5rem;
-}
-
-.card {
-    margin-bottom: 2rem;
-    .card-body {
+#header {
+    .navbar {
+        height: 4rem;
         padding: 0;
-        > * {
-            padding: 15px;
+        .navbar-brand {
+            padding: 0;
             margin: 0;
         }
-        .post {
-            border-right: none;
-        }
-        .comments {
-            padding-top: 53px;
-            .comment {
-                background: #eee;
-                padding: .5rem;
-                width: 80%;
-                float: right;
-                border-radius: .4rem;
-                margin-bottom: 1rem;
-                font-size: .875rem;
-                &.owner {
-                    float: left;
-                    background: #33A1FD;
-                    .link {
-                        color: #fff;
-                        font-weight: bold;
-                        &:hover {
-                            text-decoration: none;
+    }
+}
+
+#main {
+    margin-top: 4rem;
+}
+
+#posts {
+    .card {
+        margin-bottom: 2rem;
+        .card-body {
+            padding: 0;
+            > * {
+                padding: 15px;
+                margin: 0;
+            }
+            .post {
+                border-right: none;
+            }
+            .comments {
+                padding-top: 53px;
+                .comment {
+                    background: #eee;
+                    padding: .5rem;
+                    width: 80%;
+                    float: right;
+                    border-radius: .4rem;
+                    margin-bottom: 1rem;
+                    font-size: .875rem;
+                    &.owner {
+                        float: left;
+                        background: #33A1FD;
+                        .link {
+                            color: #fff;
+                            font-weight: bold;
+                            &:hover {
+                                text-decoration: none;
+                            }
                         }
                     }
-                }
-                .avatar {
-                    width: 30px;
-                    border-radius: 20px;
-                }
-                .text {
-                    margin: 0 0 0 34px;
+                    .avatar {
+                        width: 30px;
+                        border-radius: 20px;
+                    }
+                    .text {
+                        margin: 0 0 0 34px;
+                    }
                 }
             }
         }
-    }
-    .card-footer {
-        .avatar {
-            img {
-                width: 60px;
+        .card-footer {
+            .avatar {
+                img {
+                    width: 60px;
+                }
             }
-        }
-        .info {
-            padding-left: .5rem;
+            .info {
+                padding-left: .5rem;
+            }
         }
     }
 }
+
+#players {
+    
+}
+
 
 .not-found main {
     padding: 0;

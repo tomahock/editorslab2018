@@ -5,7 +5,7 @@
     db = d.body;
 
     var breakpoints = {sm: 576, md: 768, lg: 992, xl: 1200},
-        api = 'https://c66a9fd4.ngrok.io',
+        api = 'https://ea9f1ee3.ngrok.io',
         templates = {};
 
     function toggleLoading(evt) {
@@ -19,13 +19,10 @@
         });
     }
 
-    function getLast() {
+    function getLatest() {
         $.get(api + '/last', function(res) {
             console.log(res);
-            $(res).each(function(idx, elm) {
-                $('#last').append(Mustache.render(templates['last'], elm));
-                getStats(elm.owner.username);
-            })
+            $('#posts').html(Mustache.render(templates['latest-posts'], res, {post: templates['post']}));
         });
     }
 
@@ -43,6 +40,11 @@
         });
     }
 
+    function getStuff() {
+        getPlayers();
+        getLatest();
+    }
+
     /* EVENT LISTENERS */
     $(d).on('ajaxStart ajaxStop', toggleLoading);
 
@@ -50,9 +52,11 @@
     $('script[type="x-tmpl-mustache"]').each(function(idx, elm) {
         elm = $(elm);
         var template = elm.attr('data-template');
+        console.log(template);
         templates[template] = elm.html();
         Mustache.parse(templates[template]);
+        elm.remove();
     });
-    !$(de).is('.not-found') && getLast();
+    !$(de).is('.not-found') && getStuff();
 
 }(jQuery, window, document));

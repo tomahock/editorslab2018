@@ -16,7 +16,7 @@
 </script>
 
 <script type="x-tmpl-mustache" data-template="post">
-    <div class="card">
+    <article class="card">
         <div class="card-body d-flex flex-column flex-md-row">
             <div class="col-12 col-md-6 post">
                 {{#post}}
@@ -50,6 +50,35 @@
             <div class="col-12 col-md-8 row stats"></div>
         </div>
         {{/owner}}
-    </div>
+    </article>
+</script>
+
+<script type="x-tmpl-mustache" data-template="latest-posts">
+    <h1>Latest Posts</h1>
+    {{#.}}
+        {{> post}}
+    {{/.}}
+    {{^.}}
+        <p>Nothing to see here</p>
+    {{/.}}
+</script>
+
+<script type="x-tmpl-mustache" data-template="player-posts">
+    <h1>{{player.displayName}}</h1>
+    {{#posts}}
+        {{> post}}
+    {{/posts}}
+    {{^posts}}
+        <p>Nothing to see here</p>
+    {{/posts}}
+</script>
+
+<script type="x-tmpl-mustache" data-template="players">
+    {{#players}}
+        <li>cenas</li>
+    {{/players}}
+    {{^players}}
+        <li class="empty">Nothing to see here</li>
+    {{/players}}
 </script>
 {% endraw %}

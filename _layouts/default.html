@@ -3,9 +3,9 @@
 <html lang="en-US" class="{{page.class}}">
 {% include head.html %}
 <body class="d-flex flex-column">
+    {% include svg.html %}
     {% include header.html %}
-    <main role="main" class="mb-auto">
-        {% include svg.html %}
+    <main id="main" role="main" class="mb-auto row">
         {{content}}
     </main>
     {% include footer.html %}
