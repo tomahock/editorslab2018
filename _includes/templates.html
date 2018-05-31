@@ -2,7 +2,10 @@
 {% raw %}
 <script type="x-tmpl-mustache" data-template="comment">
     {{#comment}}
-    <li {{#same}}class="owner"{{/same}}>{{text}}</li>
+    <li {{#same}}class="owner"{{/same}}>
+        <img class="comment-avatar" src="{{owner.avatar}}" /> {{owner.displayName}}
+        <p class="comment-text">{{text}}</p>
+    </li>
     {{/comment}}
 </script>
 
