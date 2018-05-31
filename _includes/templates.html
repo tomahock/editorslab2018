@@ -3,7 +3,10 @@
 <script type="x-tmpl-mustache" data-template="stats">
     <div class="col-12 col-md-6 stats">
         <div><strong>Comments</strong></div>
-        <div><span><strong>{{receive}}</strong> Received</span> <span><strong>{{sent}}</strong> Sent</span></div>
+        <div>
+            <span><strong>{{receive}}</strong> Received</span>
+            <span><strong>{{sent}}</strong> Sent</span>
+        </div>
         <div>Most received from </div>
         <div>Most sent to </div>
     </div>
@@ -34,11 +37,13 @@
         {{#owner}}
         <div class="card-footer" data-username="{{username}}">
             {{#avatar}}
-            <div class="col-12 col-md-4 d-flex align-items-start avatar">
-                <img class="rounded-circle" src="{{avatar}}">
-                <div class="info">
-                    <div class="name">{{displayName}}</div>
-                    <div class="country">{{country}}</div>
+            <div class="col-12 col-md-4 avatar">
+                <div class="d-flex align-items-start">
+                    <img class="rounded-circle" src="{{avatar}}">
+                    <div class="info">
+                        <div class="name">{{displayName}}</div>
+                        <div class="country">{{country}}</div>
+                    </div>
                 </div>
             </div>
             {{/avatar}}
