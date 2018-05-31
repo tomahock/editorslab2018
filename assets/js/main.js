@@ -29,7 +29,7 @@
     function getPlayers() {
         $.get(api + '/players', function(res) {
             console.log(res);
-            //$('#players').html(Mustache.render(templates['template-players'], res));
+            $('#players ul').html(Mustache.render(templates['players'], res));
         });
     }
 

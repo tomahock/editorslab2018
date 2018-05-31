@@ -74,11 +74,11 @@
 </script>
 
 <script type="x-tmpl-mustache" data-template="players">
-    {{#players}}
-        <li>cenas</li>
-    {{/players}}
-    {{^players}}
+    {{#.}}
+        <li><a href="#/posts/{{username}}">{{displayName}}</a></li>
+    {{/.}}
+    {{^.}}
         <li class="empty">Nothing to see here</li>
-    {{/players}}
+    {{/.}}
 </script>
 {% endraw %}
