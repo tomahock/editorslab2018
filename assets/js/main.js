@@ -8,56 +8,24 @@
         api = 'https://c66a9fd4.ngrok.io',
         templates = {};
 
-    /* UTILS */
-    function throttle(cb, delay, debounce) {
-        delay = delay || 0;
-
-        var last = 0,
-            timeout;
-
-        function throttled() {
-            var now = +new Date(),
-                diff = debounce ? 0 : now - last,
-                args = arguments,
-                that = this;
-
-            if (diff >= delay) {
-                last = now;
-                return cb.apply(that, args);
-            } else {
-                timeout && clearTimeout(timeout);
-            }
-            timeout = setTimeout(function() {
-                timeout = null;
-                return cb.apply(that, args);
-            }, delay - diff);
-        }
-
-        return throttled;
-    }
-
     function toggleLoading(evt) {
         $(de).toggleClass('loading', evt.type === 'ajaxStart');
     }
 
     /* METHODS */
-    function getStats() {
-        $('[data-username]').each(function(idx, elm) {
-            $.get(api + '/players/' + $(elm).attr('data-username') + '/stats', function(res) {
-                console.log(res);
-                //$('#player').html(Mustache.render(templates['template-player'], res));
-            });
-        })
+    function getStats(username) {
+        $.get(api + '/players/' + username + '/stats', function(res) {
+            $('[data-username="' + username + '"] .stats').html(Mustache.render(templates['stats'], res));
+        });
     }
 
     function getLast() {
         $.get(api + '/last', function(res) {
             console.log(res);
-            $('#last').html(Mustache.render(templates['last'], res, {
-                post: templates['post'],
-                comment: templates['comment']
-            }));
-            getStats();
+            $(res).each(function(idx, elm) {
+                $('#last').append(Mustache.render(templates['last'], elm));
+                getStats(elm.owner.username);
+            })
         });
     }
 
@@ -75,11 +43,6 @@
         });
     }
 
-
-    function getStuff() {
-        getLast();
-    }
-
     /* EVENT LISTENERS */
     $(d).on('ajaxStart ajaxStop', toggleLoading);
 
@@ -90,6 +53,6 @@
         templates[template] = elm.html();
         Mustache.parse(templates[template]);
     });
-    !$(de).is('.not-found') && getStuff();
+    !$(de).is('.not-found') && getLast();
 
 }(jQuery, window, document));
