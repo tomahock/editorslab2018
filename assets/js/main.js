@@ -44,7 +44,10 @@
     function getLast() {
         $.get(api + '/last', function(res) {
             console.log(res);
-            $('#last').html(Mustache.render(templates['last'], res, {post: templates['post']}));
+            $('#last').html(Mustache.render(templates['last'], res, {
+                post: templates['post'],
+                comment: templates['comment']
+            }));
         });
     }
 

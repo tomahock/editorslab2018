@@ -55,9 +55,31 @@ img, svg {
 
 main {
     margin-top: 5rem;
-    .card {
-        margin-bottom: 2rem;
+}
+
+.card {
+    margin-bottom: 2rem;
+}
+
+.post {
+    border-right: 1px solid #ccc;
+    height: 100%;
+}
+
+.comments {
+    li {
+        background: #eee;
+        padding: 1rem;
+        width: 80%;
+        float: right;
+        border-radius: .5rem;
+        margin-bottom: 1rem;
+        &.owner {
+            float: left;
+            background: #33A1FD;
+        }
     }
+
 }
 
 .not-found main {
