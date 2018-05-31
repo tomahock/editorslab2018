@@ -92,6 +92,9 @@ main {
 
         .comment-owner{
             color: #262626;
+            &:hover {
+                text-decoration: none;
+            }
         }
     }
 
