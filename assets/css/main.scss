@@ -60,19 +60,21 @@ main {
             margin: 0;
         }
         .post {
-            border-right: 1px solid #ccc;
+            border-right: none;
         }
         .comments {
             li {
                 background: #eee;
-                padding: 1rem;
+                padding: .5rem;
                 width: 80%;
                 float: right;
-                border-radius: .5rem;
+                border-radius: .4rem;
                 margin-bottom: 1rem;
+                font-size: .875rem;
                 &.owner {
                     float: left;
                     background: #33A1FD;
+                    color: #fff
                 }
                 .comment-avatar {
                     width: 30px;
