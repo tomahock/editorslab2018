@@ -5,7 +5,7 @@
     db = d.body;
 
     var breakpoints = {sm: 576, md: 768, lg: 992, xl: 1200},
-        api = 'https://c66a9fd4.ngrok.io/',
+        api = 'https://c66a9fd4.ngrok.io',
         templates = {};
 
     /* UTILS */
