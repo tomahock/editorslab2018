@@ -69,7 +69,7 @@ img, svg {
     .navbar {
         height: 4rem;
         padding: 0;
-        background: #f8f8f8;
+        background: #f7f7f7;
         .navbar-brand {
             padding: 0;
             margin: 0;
@@ -178,6 +178,7 @@ img, svg {
             width: 20px;
             height: 20px;
             cursor: pointer;
+            z-index: 1;
             svg {
                 position: absolute;
                 left: 0;
@@ -197,12 +198,21 @@ img, svg {
 
 #players {
     font-size: .875rem;
-    a {
-        color: #333;
-        display: block;
-        &:hover {
-            color: #33A1FD
-        }
+    .list-group-item {
+        padding: 0;
+        a {
+            color: #333;
+            display: block;
+            padding: .75rem 1.25rem;
+            background: transparent;
+            transition: .3s linear;
+            will-change: background;
+            &:hover {
+                background: #f7f7f7;
+                color: #33A1FD;
+                text-decoration: none;
+            }
+        }    
     }
 }
 
