@@ -54,7 +54,7 @@
         });
     }
 
-    function checkHash() {
+    function getRoute() {
         hash = location.hash;
         switch (true) {
             case /compare/.test(hash):
@@ -71,7 +71,7 @@
 
     /* EVENT LISTENERS */
     $(d).on('ajaxStart ajaxStop', toggleLoading);
-    $(w).on('hashchange', checkHash);
+    $(w).on('hashchange', getRoute);
 
     /* INIT */
     $('script[type="x-tmpl-mustache"]').each(function(idx, elm) {
@@ -81,7 +81,7 @@
         Mustache.parse(templates[template]);
         elm.remove();
     });
-    checkHash();
+    getRoute();
     getPlayers();
 
 }(jQuery, window, document));
