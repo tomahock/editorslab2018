@@ -45,7 +45,6 @@
         var pathname = ev.target.hash.slice(1);
         $.get(api + pathname, function(player) {
             $.get(api + pathname + '/posts', function(posts) {
-                console.log(posts);
                 $('#posts').html(
                     Mustache.render(
                         templates['player-posts'],
