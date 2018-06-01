@@ -40,11 +40,9 @@
         });
     }
 
-    function getPlayer(ev) {
-        ev.preventDefault();
-        var pathname = ev.target.hash.slice(1);
-        $.get(api + pathname, function(player) {
-            $.get(api + pathname + '/posts', function(posts) {
+    function getPlayer(username) {
+        $.get(api + '/players/' + username, function(player) {
+            $.get(api + '/players/' + username + '/posts', function(posts) {
                 $('#posts').html(
                     Mustache.render(
                         templates['player-posts'],
@@ -56,14 +54,24 @@
         });
     }
 
-    function getStuff() {
-        getPlayers();
-        getLatest();
+    function checkHash() {
+        hash = location.hash;
+        switch (true) {
+            case /compare/.test(hash):
+                break;
+            case /players/.test(hash):
+                var username = hash.replace('#/players/', '');
+                getPlayer(username);
+                break;
+            default:
+                getLatest();
+                break;
+        }
     }
 
     /* EVENT LISTENERS */
     $(d).on('ajaxStart ajaxStop', toggleLoading);
-    $(d).on('click', '#players a', getPlayer);
+    $(w).on('hashchange', checkHash);
 
     /* INIT */
     $('script[type="x-tmpl-mustache"]').each(function(idx, elm) {
@@ -73,6 +81,7 @@
         Mustache.parse(templates[template]);
         elm.remove();
     });
-    !$(de).is('.not-found') && getStuff();
+    checkHash();
+    getPlayers();
 
 }(jQuery, window, document));
