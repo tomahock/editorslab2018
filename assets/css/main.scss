@@ -32,6 +32,16 @@ img, svg {
     max-width: 100%;
 }
 
+.btn-unstyled {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    &:focus {
+        outline: none;
+    }
+}
+
 .loading {
     body {
         &:before, &:after {
@@ -157,6 +167,27 @@ img, svg {
                 padding-left: .75rem;
                 .name {
                     font-weight: bold;
+                }
+            }
+        }
+        .share {
+            position: absolute;
+            top:1rem;
+            right:1rem;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            svg {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                fill: #aaa;
+            }
+            &:hover {
+                svg {
+                    fill: #33A1FD
                 }
             }
         }
