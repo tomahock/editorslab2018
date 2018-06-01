@@ -82,10 +82,14 @@
 
 <script type="x-tmpl-mustache" data-template="players">
     {{#.}}
-        <li><a href="#/players/{{username}}">{{displayName}}</a></li>
+        <li class="list-group-item">
+            <a href="#/players/{{username}}">
+                {{displayName}}{{^displayName}}{{username}}{{/displayName}}
+            </a>
+        </li>
     {{/.}}
     {{^.}}
-        <li class="empty">Nothing to see here</li>
+        <li class="list-group-item">Nothing to see here</li>
     {{/.}}
 </script>
 {% endraw %}
