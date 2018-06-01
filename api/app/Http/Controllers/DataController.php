@@ -329,6 +329,23 @@ class DataController extends Controller
             );
         }
 
+        $query = "match (p:Player {username:{playerId}})-[:Create]->(c:Comment)
+                    with p,c
+                     match (post:Post)<-[:Commented]-(c)
+                    match (c)<-[:Create]-(person:Player)
+                    where p.username=person.username
+                    return count(c) as total";
+
+        $result = $client->run($query, ['playerId' => $playerId]);
+
+        if($result->size()){
+            $r = $result->getRecord();
+
+            $response['selfComments'] = $r->get('total');
+        } else {
+            $response['selfComments'] = 0;
+        }
+
 
         $postHours = $this->getPostHours($playerId);
         $commentsHours = $this->getCommentsHours($playerId);
