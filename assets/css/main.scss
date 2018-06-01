@@ -159,14 +159,15 @@ img, svg {
         .card-footer {
             font-size: .875rem;
             .avatar {
-                img {
-                    width: 60px;
-                }
+                width: 60px;
             }
             .info {
                 padding-left: .75rem;
                 .name {
                     font-weight: bold;
+                }
+                .country {
+                    width: 25px;
                 }
             }
         }
@@ -198,6 +199,7 @@ img, svg {
     font-size: .875rem;
     a {
         color: #333;
+        display: block;
         &:hover {
             color: #33A1FD
         }
