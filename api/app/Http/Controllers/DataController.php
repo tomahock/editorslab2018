@@ -332,7 +332,29 @@ class DataController extends Controller
         $query = "match (p:Player {username:{playerId}})-[:Create]->(c:Comment)
                     with p,c
                      match (post:Post)<-[:Commented]-(c)
-                    match (c)<-[:Create]-(person:Player)
+                    match (post)<-[:Publish]-(person:Player)
+                    where not p.username=person.username
+                    with person,c order by c desc
+                    return count(c) as c, person as player";
+
+        $result = $client->run($query, ['playerId' => $playerId]);
+
+        if($result->size()){
+            $r = $result->getRecord();
+
+            $response['mostCommentsSent'] = array(
+                'total' => $r->get('c'),
+                'player' => $r->get('player')->values(),
+            );
+        } else {
+            $response['mostCommentsSent'] = array(
+            );
+        }
+
+        $query = "match (p:Player {username:{playerId}})-[:Create]->(c:Comment)
+                     with p,c
+                     match (post:Post)<-[:Commented]-(c),
+                     (post)<-[:Publish]-(person:Player)
                     where p.username=person.username
                     return count(c) as total";
 
