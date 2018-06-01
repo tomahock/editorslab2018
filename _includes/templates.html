@@ -71,7 +71,9 @@
 </script>
 
 <script type="x-tmpl-mustache" data-template="player-posts">
-    <h1>{{player.displayName}}'s Posts</h1>
+    {{#player}}
+    <h1>{{displayName}}{{^displayName}}{{username}}{{/displayName}}'s Posts</h1>
+    {{/player}}
     {{#posts}}
         {{> post}}
     {{/posts}}
