@@ -20,6 +20,14 @@ a {
     }
 }
 
+h1 {
+    font-size: 1.5rem;
+    padding: 1.5rem 0 .5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 100;
+}
+
 img, svg {
     max-width: 100%;
 }
@@ -139,13 +147,17 @@ img, svg {
             }
         }
         .card-footer {
+            font-size: .875rem;
             .avatar {
                 img {
                     width: 60px;
                 }
             }
             .info {
-                padding-left: .5rem;
+                padding-left: .75rem;
+                .name {
+                    font-weight: bold;
+                }
             }
         }
     }
