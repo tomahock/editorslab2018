@@ -164,12 +164,6 @@ img, svg {
 }
 
 #players {
-    ul {
-        font-size: .875rem;
-        border: 1px solid #E1E3DF;
-        border-radius: .25rem;
-        padding: 1rem;
-    }
     a {
         color: #333;
         &:hover {
@@ -177,7 +171,6 @@ img, svg {
         }
     }
 }
-
 
 .not-found main {
     padding: 0;
