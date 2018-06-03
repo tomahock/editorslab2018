@@ -55,7 +55,7 @@
     }
 
     function getRoute() {
-        hash = location.hash;
+        var hash = location.hash;
         switch (true) {
             case /compare/.test(hash):
                 break;
